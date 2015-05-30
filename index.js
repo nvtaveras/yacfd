@@ -1,9 +1,22 @@
 var request = require('request');
 var cheerio = require('cheerio');
+var program = require('commander');
+
 var fs = require('fs');
 var util = require('util');
 
-var HANDLE = 'ntaveras';
+var pkg = require('./package');
+
+program
+	.version(pkg.version)
+	.option('-a, --handle [handle]', 'Contestant handle')
+	.parse(process.argv);
+
+if (!program.handle) {
+	program.help(); // Exits program after showing help.
+}
+
+var HANDLE = program.handle;
 var DOWNLOAD_FOLDER = 'Solutions';
 var OUTPUT_FOLDER = __dirname + '/' + DOWNLOAD_FOLDER;
 
